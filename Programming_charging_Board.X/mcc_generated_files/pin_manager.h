@@ -59,6 +59,34 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define PULL_UP_ENABLED      1
 #define PULL_UP_DISABLED     0
 
+// get/set IO_RA0 aliases
+#define IO_RA0_TRIS               TRISA0
+#define IO_RA0_LAT                LATA0
+#define IO_RA0_PORT               RA0
+#define IO_RA0_ANS                ANSA0
+#define IO_RA0_SetHigh()    do { LATA0 = 1; } while(0)
+#define IO_RA0_SetLow()   do { LATA0 = 0; } while(0)
+#define IO_RA0_Toggle()   do { LATA0 = ~LATA0; } while(0)
+#define IO_RA0_GetValue()         RA0
+#define IO_RA0_SetDigitalInput()    do { TRISA0 = 1; } while(0)
+#define IO_RA0_SetDigitalOutput()   do { TRISA0 = 0; } while(0)
+
+#define IO_RA0_SetAnalogMode()   do { ANSA0 = 1; } while(0)
+#define IO_RA0_SetDigitalMode()   do { ANSA0 = 0; } while(0)
+// get/set ICSP_clock aliases
+#define ICSP_clock_TRIS               TRISA1
+#define ICSP_clock_LAT                LATA1
+#define ICSP_clock_PORT               RA1
+#define ICSP_clock_ANS                ANSA1
+#define ICSP_clock_SetHigh()    do { LATA1 = 1; } while(0)
+#define ICSP_clock_SetLow()   do { LATA1 = 0; } while(0)
+#define ICSP_clock_Toggle()   do { LATA1 = ~LATA1; } while(0)
+#define ICSP_clock_GetValue()         RA1
+#define ICSP_clock_SetDigitalInput()    do { TRISA1 = 1; } while(0)
+#define ICSP_clock_SetDigitalOutput()   do { TRISA1 = 0; } while(0)
+
+#define ICSP_clock_SetAnalogMode()   do { ANSA1 = 1; } while(0)
+#define ICSP_clock_SetDigitalMode()   do { ANSA1 = 0; } while(0)
 // get/set LED_D9 aliases
 #define LED_D9_TRIS               TRISA2
 #define LED_D9_LAT                LATA2
@@ -173,20 +201,7 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
 #define TX_SetDigitalMode()   do { ANSC7 = 0; } while(0)
 
 // Read register for Sensor     (Adress + first bit =1))
-#define TEMP_OUT_L              (0x42+0x80)// 80h is added so that the command will be interpreted as Read command 
-#define WHO_AM_I              (0x75+0x80)
-#define GYRO_XOUT_L              (0x44+0x80)
-#define GYRO_XOUT_H              (0x43+0x80)
-#define GYRO_YOUT_H             (0x45+0x80)
-#define GYRO_YOUT_L             (0x46+0x80)
-#define GYRO_ZOUT_H             (0x47+0x80)
-#define GYRO_ZOUT_L             (0x48+0x80)
 
-// SPI commands for memory
-#define read_ID                 0x90
-#define write_EN                0x06
-#define page_prog               0x02
-#define Read_Data               0x03
 /**
  * @Param
     none

@@ -45,6 +45,8 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  */
 
 #include "mcc_generated_files/mcc.h"
+#include "user.h"
+#include "newfile.h"
 #include <xc.h>
 #include <stdlib.h>
 #include <stdbool.h> 
@@ -54,10 +56,28 @@ SUBSTITUTE GOODS, TECHNOLOGY, SERVICES, OR ANY CLAIMS BY THIRD PARTIES
  */
 void main(void)
 {
+    int i=0,j;
     // initialize the device
     //SYSTEM_Initialize();
 //PIN_MANAGER_Initialize();
 //EUSART_Initialize();
+//            for (j = 0; j <= 2; j++) {
+//            for (i = 0; i <= 400; i++) {
+//                NOP();
+//            }
+//            i = 0;
+//            for (i = 0; i <= 400; i++) {
+//                NOP();
+//            }
+//            i = 0;
+//            for (i = 0; i <= 400; i++) {
+//                NOP();
+//            }
+//            i = 0;
+//        }
+//        j = 0;
+        
+        
 SYSTEM_Initialize();
     // When using interrupts, you need to set the Global and Peripheral Interrupt Enable bits
     // Use the following macros to:
@@ -72,7 +92,7 @@ SYSTEM_Initialize();
     //INTERRUPT_GlobalInterruptDisable();
 const uint8_t SPI_prog[10]={page_prog,0x00,0x00,0x00,'F','A','R','H','A','N'};
 const uint8_t SPI_send[10]={Read_Data,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
-
+//const uint8_t SPI_send[10]={Read_UN_ID,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 uint8_t SPI_rec[10];
 //uint8_t string[10];
 
@@ -82,28 +102,38 @@ uint8_t SPI_rec[10];
 //LED_D10_SetHigh();
 //LED_D2_small_SetLow();
 //LED_D9_SetLow();
+ICSP_clock_SetDigitalOutput();
+IO_RA0_SetDigitalInput();
 CS_flash_SetDigitalOutput();
 CS_flash_SetHigh();
 int i=0,j;
     while (1) {
+        ICSP_clock_SetLow();
+        if(i<1){
+        for(i=0;i<=3;i++)
+        {
         CS_flash_SetLow();
-        //NOP();
-        SPI_Exchange8bit(write_EN);
-       // NOP();
-        CS_flash_SetHigh();
-        //NOP();
+        NOP();
+       SPI_Exchange8bit(write_EN);
+        NOP();
+       CS_flash_SetHigh();
+        NOP();
      // __delay_us(10);
         CS_flash_SetLow();
          SPI_Exchange8bitBuffer(&SPI_prog[0], 10, &SPI_rec[0]);
 
         CS_flash_SetHigh();
+        i++;
+        }
+        }
         NOP();
- 
+        
+ __delay_us(1);
+ ICSP_clock_SetHigh();
         CS_flash_SetLow();
        // SPI_send[]={Read_Data,0x00,0x00,0x00,0x00,0x00,0x00};
         SPI_Exchange8bitBuffer(&SPI_send[0], 10, &SPI_rec[0]);
         
-
          CS_flash_SetHigh();       
         //sprintf(string, "%x", SPI_rec[0]); // sting convertion
         printf("first byte =");
@@ -123,7 +153,7 @@ int i=0,j;
         printf("\n\r");
         
         
-        
+//        
 //        for (j = 0; j <= 2; j++) {
 //            for (i = 0; i <= 4000; i++) {
 //                NOP();

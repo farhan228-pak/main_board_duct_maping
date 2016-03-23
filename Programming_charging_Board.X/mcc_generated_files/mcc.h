@@ -81,7 +81,7 @@ void SYSTEM_Initialize(void);
  */
 void OSCILLATOR_Initialize(void);
 
-void Gyro_read_function(void);
+
 
 
 #endif	/* MCC_H */
